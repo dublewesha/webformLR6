@@ -29,7 +29,6 @@ namespace webformLR6
             app.UseStaticFiles();
 
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.MapControllerRoute(

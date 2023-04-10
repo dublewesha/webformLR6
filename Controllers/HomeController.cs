@@ -21,18 +21,25 @@ namespace webformLR6.Controllers
             return View();
         }
 
-        public IActionResult Api(string? ViewBag)
+        public IActionResult Api()
         {
             var items = _context.TodoItems.ToList();
             return View(items);
         }
         [HttpPost]
-        public IActionResult Save(TodoItem item)
+        public IActionResult Edit(TodoItem item)
         {
+            if (item.Id == 0)
+            {
+                ViewBag.Danger = "Ошибка, экземпляр не найден";
+                return View(item);
+            }
             _context.TodoItems.Update(item);
             _context.SaveChanges();
-            return RedirectToAction("Api");
+            ViewBag.Success = "Изменения успешно сохранены";
+            return View(item);
         }
+        [HttpGet]
         public IActionResult Edit(long id)
         {
             var item = _context.TodoItems.FirstOrDefault(x => x.Id == id);
